@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="icon" href="https://i.ibb.co/JqdGK2K/2.png">
+	<title>Vishnu Miniplex</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" name="cardboard"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+<header class="header-user-dropdown">
+
+	<div class="header-limiter">
+			<h1><a href="#"><span id="vishnu">Vishnu<span id="mini">Mini</span><span id="plex" >Plex</span></a></h1>
+
+
+		<nav>
+			<a href="{% url 'home' %}">Home</a>
+			<a href="#">Surveys</a>
+			<a href="#">Reports</a>
+			<a href="#">Roles <span class="header-new-feature">new</span></a>
+		</nav>
+
+		{% if user.is_authenticated %}
+		<div class="header-user-menu">
+			<img src="https://i.ibb.co/JqdGK2K/2.png" alt="User Image" />
+
+			<ul>
+				<li><a href="#">Settings</a></li>
+				<li><a href="#">Payments</a></li>
+				<li><a href="{% url 'logout' %}" class="highlight">Logout</a></li>
+			</ul>
+		</div>
+		{% else %}
+		<div class="header-user-menu">
+			<img src="https://i.ibb.co/JqdGK2K/2.png" alt="User Image" />
+
+			<ul>
+				<li><a href="{% url 'login' %}">Login</a></li>
+				<li><a href="{% url 'signup' %}">Signup</a></li>
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+
+</header>
+<style>
+	.header-user-dropdown {
+		background-color: #292c2f;
+
+		padding: 20px 40px;
+		height: 80px;
+		color: #ffffff;
+		box-sizing: border-box;
+	}
+
+	.header-user-dropdown .header-limiter {
+		max-width: 1200px;
+		text-align: center;
+		margin: 0 auto;
+	}
+
+	/* Logo */
+
+	.header-user-dropdown .header-limiter h1 {
+		float: left;
+		font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+		line-height: 40px;
+		margin: 0;
+	}
+
+	.header-user-dropdown .header-limiter h1 span#mini {
+        color: #0dff0d;
+        font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+    }
+    .header-user-dropdown .header-limiter h1 span#vishnu {
+        color: #fd8700;
+        font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+    }
+    .header-user-dropdown .header-limiter h1 span#plex {
+        color: #ca0aff;
+        font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+	}
+	/* The header links */
+
+	.header-user-dropdown .header-limiter a {
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	.header-user-dropdown .header-limiter nav {
+		font: 16px Arial, Helvetica, sans-serif;
+		line-height: 40px;
+		float: left;
+		margin: 0 0 0 60px;
+		padding: 0;
+	}
+
+	.header-user-dropdown .header-limiter nav a {
+		font-size: 14px;
+		display: inline-block;
+		padding: 0 12px;
+		opacity: 0.9;
+		position: relative;
+		text-decoration: none;
+		line-height: 1;
+	}
+
+	.header-user-dropdown .header-limiter nav a:hover {
+		opacity: 1;
+	}
+
+	/* The "new" badge */
+
+	.header-user-dropdown .header-limiter nav a span {
+		position: absolute;
+		top: -12px;
+		border-radius: 2px;
+		background-color: #2A6A92;
+		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+		height: 13px;
+		font-size: 11px;
+		right: -15px;
+		padding: 1px 4px 0;
+	}
+
+	/* The user menu */
+
+	.header-user-dropdown .header-limiter .header-user-menu {
+		position: relative;
+		float: right;
+		background-color: #3a3c3e;
+		width: 75px;
+		height: 40px;
+		border-radius: 2px;
+	}
+
+	.header-user-dropdown .header-limiter .header-user-menu:before {
+		content: '';
+		width: 0;
+		height: 0;
+		top: 18px;
+		left: 15px;
+		position: absolute;
+		border: 5px solid transparent;
+		border-top-color: #fff;
+	}
+
+	.header-user-dropdown .header-limiter .header-user-menu ul {
+		display: none;
+		font: bold 13px Arial, Helvetica, sans-serif;
+		background-color: inherit;
+		list-style: none;
+		position: absolute;
+		text-align: center;
+		width: 125px;
+		top: 25px;
+		right: 0;
+		padding: 10px;
+		border-radius: 2px;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+		box-sizing: border-box;
+	}
+
+	.header-user-dropdown .header-user-menu:active ul,
+	.header-user-dropdown .header-user-menu:hover ul,
+	.header-user-dropdown .header-user-menu.show ul {
+		display: block;
+	}
+
+	.header-user-dropdown .header-user-menu ul li {
+		padding: 5px;
+	}
+
+	.header-user-dropdown .header-user-menu ul li a:hover {
+		opacity: 0.9;
+	}
+
+	.header-user-dropdown .header-user-menu ul li a.highlight {
+		color: #e9ac09;
+	}
+
+	.header-user-dropdown .header-user-menu img {
+		border-radius: 50%;
+		position: absolute;
+		top: 6px;
+		max-width: 28px;
+		right: 10px;
+	}
+
+
+	@media all and (max-width: 800px) {
+
+		.header-user-dropdown .header-limiter h1 {
+			font-size: 24px;
+		}
+
+		.header-user-dropdown .header-limiter nav a {
+			padding: 0 5px;
+		}
+
+		.header-user-dropdown .header-limiter nav {
+			margin-left: 20px;
+		}
+
+	}
+
+	@media all and (max-width: 600px) {
+
+		.header-user-dropdown .header-limiter nav {
+			display: none;
+		}
+
+	}
+
+	@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+	body {
+		font: 14px/1.5 Arial, Helvetica, sans-serif;
+		padding: 0;
+		margin: 0;
+	}
+
+	.menu {
+		text-align: center;
+		padding-top: 25px;
+		margin-bottom: 200px;
+	}
+
+	.menu img {
+		opacity: 0.4;
+		margin: 20px auto;
+	}
+
+	.menu h1 {
+		margin-top: 0;
+		font: normal 32px/1.5 'Open Sans', sans-serif;
+		color: #3F71AE;
+		padding-bottom: 16px;
+	}
+
+	.menu h2 {
+		color: #F05283;
+	}
+
+	.menu h2 a {
+		color: inherit;
+		text-decoration: none;
+		display: inline-block;
+		border: 1px solid #F05283;
+		padding: 10px 15px;
+		border-radius: 3px;
+		font: bold 14px/1 'Open Sans', sans-serif;
+		text-transform: uppercase;
+	}
+
+	.menu h2 a:hover {
+		background-color: #F05283;
+		transition: 0.2s;
+		color: #fff;
+	}
+
+	.menu ul {
+		max-width: 600px;
+		margin: 60px auto 0;
+	}
+
+	.menu ul a {
+		text-decoration: none;
+		color: #FFF;
+		text-align: left;
+		background-color: #B9C1CA;
+		padding: 10px 16px;
+		border-radius: 2px;
+		opacity: 0.8;
+		font-size: 16px;
+		display: inline-block;
+		margin: 4px;
+		line-height: 1;
+		outline: none;
+
+		transition: 0.2s ease;
+	}
+
+	.menu ul li a.active {
+		background-color: #66B650;
+		pointer-events: none;
+	}
+
+	.menu ul li a:hover {
+		opacity: 1;
+	}
+
+	.menu ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.menu ul li {
+		display: inline-block;
+	}
+
+	@media (max-height:800px) {
+		.menu {
+			padding-top: 40px;
+		}
+	}
+
+
+	/* -- Demo ads -- */
+
+	@media (max-width: 1200px) {
+		#bsaHolder {
+			display: none;
+		}
+	}
+
+	/* -- Link to Tutorialzine -- */
+
+	.tz-link {
+		text-decoration: none;
+		color: #fff !important;
+		font: bold 36px Arial, Helvetica, sans-serif !important;
+	}
+
+	.tz-link span {
+		color: #da431c;
+	}
+
+	#video-background {
+		/*  making the video fullscreen  */
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		z-index: -100;
+	}
+
+
+	p {
+		text-align: center;
+	}
+
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td,
+	th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	}
+
+	tr:nth-child(even) {
+		background-color: #dddddd;
+	}
+
+	input {
+		text-align: center;
+	}
+
+	.card-body:hover {
+		box-shadow: 0 8px 16px 0 rgb(0, 217, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	html {
+		background-color: #f3f3f3;
+	}
+
+	.form-login {
+		max-width: 1000px;
+		width: 100%;
+		margin: 0 auto;
+
+		font: bold 14px sans-serif;
+		text-align: center;
+	}
+
+	.form-log-in-with-email {
+		position: relative;
+		display: inline-block;
+		vertical-align: top;
+		margin-right: 130px;
+		text-align: center;
+	}
+
+	.form-log-in-with-email .form-white-background {
+		width: 570px;
+		box-sizing: border-box;
+		background-color: #ffffff;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+		padding: 60px 80px;
+		margin-bottom: 32px;
+	}
+
+	.form-log-in-with-email .form-row {
+		text-align: left;
+		margin-bottom: 5px;
+	}
+
+	.form-log-in-with-email .form-title-row {
+		text-align: center;
+
+	}
+
+	.form-log-in-with-email h1 {
+		display: inline-block;
+		box-sizing: border-box;
+		color: #4c565e;
+		font-size: 24px;
+		padding: 0 30px 15px;
+		border-bottom: 2px solid #6caee0;
+		margin: 0;
+	}
+
+	.form-log-in-with-email .form-row>label span {
+		display: inline-block;
+		box-sizing: border-box;
+		color: #5f5f5f;
+		width: 125px;
+		text-align: right;
+		padding-right: 25px;
+	}
+
+	.form-log-in-with-email input {
+		color: #5f5f5f;
+		box-sizing: border-box;
+		width: 230px;
+		box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+		padding: 12px 18px;
+		border: 1px solid #dbdbdb;
+	}
+
+	.form-log-in-with-email button {
+		display: block;
+		border-radius: 2px;
+		background-color: #6caee0;
+		color: #ffffff;
+		font-weight: bold;
+		box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+		padding: 15px 35px;
+		border: 0;
+		margin: 55px auto 0;
+		cursor: pointer;
+	}
+
+	.form-log-in-with-email .form-forgotten-password,
+	.form-log-in-with-email .form-create-an-account {
+		text-decoration: none;
+		padding: 4px 8px;
+		font-weight: normal;
+	}
+
+	.form-log-in-with-email .form-forgotten-password {
+		color: #4e9eda;
+	}
+
+	.form-log-in-with-email .form-create-an-account {
+		color: #7b9d62;
+		background-color: #d6f0c3;
+	}
+
+	.form-log-in-with-email:after {
+		content: 'OR';
+		position: absolute;
+		bottom: 260px;
+		right: -100px;
+
+		border-radius: 50%;
+		background-color: #edeca5;
+		width: 50px;
+		height: 50px;
+		color: #93923b;
+		font-size: 17px;
+		line-height: 50px;
+	}
+
+	.form-sign-in-with-social {
+		display: inline-block;
+		max-width: 180px;
+		box-sizing: border-box;
+		vertical-align: top;
+		text-align: center;
+		margin-top: 70px;
+	}
+
+	.form-sign-in-with-social .form-title-row {
+		margin-bottom: 50px;
+	}
+
+	.form-sign-in-with-social .form-title {
+		box-sizing: border-box;
+		color: #4c565e;
+		font-size: 24px;
+		padding: 15px 20px;
+		border-bottom: 2px solid #6caee0;
+	}
+
+	.form-sign-in-with-social .form-google-button {
+		color: #ffffff;
+		display: block;
+		width: 145px;
+		height: 40px;
+		font-size: 12px;
+		line-height: 40px;
+		background-color: rgba(222, 110, 60, 0.9);
+		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.08);
+		border-radius: 2px;
+		margin: 8px auto;
+		text-decoration: none;
+	}
+
+	.form-sign-in-with-social .form-facebook-button {
+		color: #ffffff;
+		display: block;
+		width: 145px;
+		height: 40px;
+		font-size: 12px;
+		line-height: 40px;
+		background-color: rgba(75, 136, 194, 0.9);
+		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.08);
+		border-radius: 2px;
+		margin: 8px auto;
+		text-decoration: none;
+	}
+
+	.form-sign-in-with-social .form-twitter-button {
+		color: #ffffff;
+		display: block;
+		width: 145px;
+		height: 40px;
+		font-size: 12px;
+		line-height: 40px;
+		background-color: rgba(123, 195, 226, 0.9);
+		box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.08);
+		border-radius: 2px;
+		margin: 8px auto;
+		text-decoration: none;
+	}
+
+	/*	Making the form responsive. Remove these media queries
+    if you don't need the form to work on mobile devices. */
+
+	@media (max-width: 900px) {
+
+		.form-login {
+			margin: 20px auto;
+		}
+
+		.form-log-in-with-email {
+			position: relative;
+			display: block;
+			margin: 0 0 50px;
+		}
+
+		.form-log-in-with-email .form-white-background {
+			margin: 0 auto 32px;
+		}
+
+		.form-log-in-with-email:after {
+			bottom: -80px;
+			left: 50%;
+			margin-left: -25px;
+		}
+
+		.form-sign-in-with-social {
+			margin-top: 60px;
+		}
+
+	}
+
+	@media (max-width: 600px) {
+
+		.form-log-in-with-email .form-white-background {
+			width: 300px;
+			padding-left: 35px;
+			padding-right: 35px;
+		}
+
+		.form-log-in-with-email .form-row>label span {
+			display: block;
+			text-align: left;
+			padding: 0 0 10px;
+		}
+
+		.form-log-in-with-email .form-email,
+		.form-log-in-with-email .form-password {
+			display: block;
+			margin: 0 auto;
+		}
+
+		.form-log-in-with-email:after {
+			bottom: -80px;
+			left: 50%;
+			margin-left: -25px;
+		}
+
+		.form-log-in-with-email .form-forgotten-password,
+		.form-log-in-with-email .form-create-an-account {
+			display: block;
+			margin: 5px auto;
+			max-width: 180px;
+		}
+
+	}
+</style>
+
+<script>
+
+	$(document).ready(function () {
+
+		var userMenu = $('.header-user-dropdown .header-user-menu');
+
+		userMenu.on('touchend', function (e) {
+
+			userMenu.addClass('show');
+
+			e.preventDefault();
+			e.stopPropagation();
+
+		});
+
+		// This code makes the user dropdown work on mobile devices
+
+		$(document).on('touchend', function (e) {
+
+			// If the page is touched anywhere outside the user menu, close it
+			userMenu.removeClass('show');
+
+		});
+
+	});
+
+</script>
+
+<div class="main-content">
+
+	<!-- You only need this form and the form-login.css -->
+
+	<form class="form-login" method="post" action="#">
+
+		<div class="form-log-in-with-email">
+
+			<div class="form-white-background">
+
+				<div class="form-title-row">
+					<h1>Log in</h1>
+				</div><br>
+
+
+				{% block content %}
+				<div id="box" style="border:thin">
+
+					{% if form.errors %}
+					<p style="color: red; text-align: center;">Your username and password didn't match. Please try again.</p>
+					{% endif %}
+
+					{% csrf_token %}
+					<input type="hidden" name="next" value="{{ next }}" />
+					{% for field in form %}
+					<p>
+						<span> {{ field.label_tag }}</span><br>
+						<div>{{ field }}</div>
+						{% for error in field.errors %}
+						<p style="color: red">{{ error }}</p>
+						{% endfor %}
+						{% if field.help_text %}
+						<p><small style="color: grey">{{ field.help_text }}</small></p>
+						{% endif %}
+					</p>
+					{% endfor %}
+
+
+				</div>
+
+				{% endblock %}
+				<div class="form-row">
+					<button type="submit">Log in</button>
+				</div>
+
+			</div>
+
+			<a href="#" class="form-forgotten-password">Forgotten password &middot;</a>
+			<a href="{% url 'signup' %}" class="form-create-an-account">Create an account &rarr;</a>
+
+		</div>
+
+		<div class="form-sign-in-with-social">
+
+			<div class="form-row form-title-row">
+				<span class="form-title">Sign in with</span>
+			</div>
+
+			<a href="{% url 'social:begin' 'google-oauth2' %}" class="form-google-button">Google</a>
+			<a href="{% url 'social:begin' 'facebook' %}" class="form-facebook-button">Facebook</a>
+			<a href="#" class="form-twitter-button">Twitter</a>
+
+		</div>
+
+	</form>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<div class="gallery">
+  <a target="#" href="#">
+
+    <img src="http://hdqwalls.com/download/avengers-end-game-poster-o0-5120x2880.jpg"
+      alt="Cinque Terre" width="800" height="400">
+  </a>
+  {% for details in details %}
+
+  <div class="desc">
+    <h1>{{ details.movie_name }}</h1>
+  </div>
+  <div class="desc">
+    <h1> {{ details.movie_date }}</h1>
+  </div>
+  {% endfor %}
+  <center><a href="{% url 'booking' %}" class="button button2" value="Book"> Book</a></center>
+</div>

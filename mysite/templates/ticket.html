@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="icon" href="https://i.ibb.co/JqdGK2K/2.png">
+  <title>Ticket Download</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Kreon:700|Audiowide&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" name="tablestyle" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+</head>
+<header class="header-user-dropdown">
+
+		<div class="header-limiter">
+				<h1><a href="#"><span id="vishnu">Vishnu<span id="mini">Mini</span><span id="plex" >Plex</span></a></h1>
+
+
+			<nav>
+				<a href="{% url 'home' %}">Home</a>
+				<a href="#">Surveys</a>
+				<a href="#">Reports</a>
+				<a href="#">Roles <span class="header-new-feature">new</span></a>
+			</nav>
+
+			{% if user.is_authenticated %}
+			<div class="header-user-menu">
+				<img src="https://i.ibb.co/JqdGK2K/2.png" alt="User Image" />
+
+				<ul>
+					<li><a href="#">Settings</a></li>
+					<li><a href="#">Payments</a></li>
+					<li><a href="{% url 'logout' %}" class="highlight">Logout</a></li>
+				</ul>
+			</div>
+			{% else %}
+			<div class="header-user-menu">
+				<img src="https://i.ibb.co/JqdGK2K/2.png" alt="User Image" />
+
+				<ul>
+					<li><a href="{% url 'login' %}">Login</a></li>
+					<li><a href="{% url 'signup' %}">Signup</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+
+	</header>
+  <script>
+
+      $(document).ready(function () {
+  
+        var userMenu = $('.header-user-dropdown .header-user-menu');
+  
+        userMenu.on('touchend', function (e) {
+  
+          userMenu.addClass('show');
+  
+          e.preventDefault();
+          e.stopPropagation();
+  
+        });
+  
+        // This code makes the user dropdown work on mobile devices
+  
+        $(document).on('touchend', function (e) {
+  
+          // If the page is touched anywhere outside the user menu, close it
+          userMenu.removeClass('show');
+  
+        });
+  
+      });
+  
+    </script>
+
+<style>
+  body {
+		font: 14px/1.5 Arial, Helvetica, sans-serif;
+		padding: 0;
+		margin: 0;
+	}
+	.header-user-dropdown {
+		background-color: #292c2f;
+		
+		padding: 20px 40px;
+		height: 80px;
+		color: #ffffff;
+		box-sizing: border-box;
+	}
+
+	.header-user-dropdown .header-limiter {
+		max-width: 1200px;
+		text-align: center;
+		margin: 0 auto;
+	}
+
+	/* Logo */
+
+	.header-user-dropdown .header-limiter h1 {
+		float: left;
+		font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+		line-height: 40px;
+		margin: 0;
+	}
+
+	.header-user-dropdown .header-limiter h1 span#mini {
+        color: #0dff0d;
+        font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+    }
+    .header-user-dropdown .header-limiter h1 span#vishnu {
+        color: #fd8700;
+        font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+    }
+    .header-user-dropdown .header-limiter h1 span#plex {
+        color: #ca0aff;
+        font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+	}
+	/* The header links */
+
+	.header-user-dropdown .header-limiter a {
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	.header-user-dropdown .header-limiter nav {
+		font: 16px Arial, Helvetica, sans-serif;
+		line-height: 40px;
+		float: left;
+		margin: 0 0 0 60px;
+		padding: 0;
+	}
+
+	.header-user-dropdown .header-limiter nav a {
+		font-size: 14px;
+		display: inline-block;
+		padding: 0 12px;
+		opacity: 0.9;
+		position: relative;
+		text-decoration: none;
+		line-height: 1;
+	}
+
+	.header-user-dropdown .header-limiter nav a:hover {
+		opacity: 1;
+	}
+
+	/* The "new" badge */
+
+	.header-user-dropdown .header-limiter nav a span {
+		position: absolute;
+		top: -12px;
+		border-radius: 2px;
+		background-color: #2A6A92;
+		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+		height: 13px;
+		font-size: 11px;
+		right: -15px;
+		padding: 1px 4px 0;
+	}
+
+	/* The user menu */
+
+	.header-user-dropdown .header-limiter .header-user-menu {
+		position: relative;
+		float: right;
+		background-color: #3a3c3e;
+		width: 75px;
+		height: 40px;
+		border-radius: 2px;
+	}
+
+	.header-user-dropdown .header-limiter .header-user-menu:before {
+		content: '';
+		width: 0;
+		height: 0;
+		top: 18px;
+		left: 15px;
+		position: absolute;
+		border: 5px solid transparent;
+		border-top-color: #fff;
+	}
+
+	.header-user-dropdown .header-limiter .header-user-menu ul {
+		display: none;
+		font: bold 13px Arial, Helvetica, sans-serif;
+		background-color: inherit;
+		list-style: none;
+		position: absolute;
+		text-align: center;
+		width: 125px;
+		top: 25px;
+		right: 0;
+		padding: 10px;
+		border-radius: 2px;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+		box-sizing: border-box;
+	}
+
+	.header-user-dropdown .header-user-menu:active ul,
+	.header-user-dropdown .header-user-menu:hover ul,
+	.header-user-dropdown .header-user-menu.show ul {
+		display: block;
+	}
+
+	.header-user-dropdown .header-user-menu ul li {
+		padding: 5px;
+	}
+
+	.header-user-dropdown .header-user-menu ul li a:hover {
+		opacity: 0.9;
+	}
+
+	.header-user-dropdown .header-user-menu ul li a.highlight {
+		color: #e9ac09;
+	}
+
+	.header-user-dropdown .header-user-menu img {
+		border-radius: 50%;
+		position: absolute;
+		top: 6px;
+		max-width: 28px;
+		right: 10px;
+	}
+
+
+	@media all and (max-width: 800px) {
+
+		.header-user-dropdown .header-limiter h1 {
+			font-size: 24px;
+		}
+
+		.header-user-dropdown .header-limiter nav a {
+			padding: 0 5px;
+		}
+
+		.header-user-dropdown .header-limiter nav {
+			margin-left: 20px;
+		}
+
+	}
+
+	@media all and (max-width: 600px) {
+
+		.header-user-dropdown .header-limiter nav {
+			display: none;
+		}
+
+	}
+
+	@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+	
+
+	.menu {
+		text-align: center;
+		padding-top: 25px;
+		margin-bottom: 200px;
+	}
+
+	.menu img {
+		opacity: 0.4;
+		margin: 20px auto;
+	}
+
+	.menu h1 {
+		margin-top: 0;
+		font: normal 32px/1.5 'Open Sans', sans-serif;
+		color: #3F71AE;
+		padding-bottom: 16px;
+	}
+
+	.menu h2 {
+		color: #F05283;
+	}
+
+	.menu h2 a {
+		color: inherit;
+		text-decoration: none;
+		display: inline-block;
+		border: 1px solid #F05283;
+		padding: 10px 15px;
+		border-radius: 3px;
+		font: bold 14px/1 'Open Sans', sans-serif;
+		text-transform: uppercase;
+	}
+
+	.menu h2 a:hover {
+		background-color: #F05283;
+		transition: 0.2s;
+		color: #fff;
+	}
+
+	.menu ul {
+		max-width: 600px;
+		margin: 60px auto 0;
+	}
+
+	.menu ul a {
+		text-decoration: none;
+		color: #FFF;
+		text-align: left;
+		background-color: #B9C1CA;
+		padding: 10px 16px;
+		border-radius: 2px;
+		opacity: 0.8;
+		font-size: 16px;
+		display: inline-block;
+		margin: 4px;
+		line-height: 1;
+		outline: none;
+
+		transition: 0.2s ease;
+	}
+
+	.menu ul li a.active {
+		background-color: #66B650;
+		pointer-events: none;
+	}
+
+	.menu ul li a:hover {
+		opacity: 1;
+	}
+
+	.menu ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.menu ul li {
+		display: inline-block;
+	}
+
+	@media (max-height:800px) {
+		.menu {
+			padding-top: 40px;
+		}
+	}
+
+
+	/* -- Demo ads -- */
+
+	@media (max-width: 1200px) {
+		#bsaHolder {
+			display: none;
+		}
+	}
+
+	/* -- Link to Tutorialzine -- */
+
+	.tz-link {
+		text-decoration: none;
+		color: #fff !important;
+		font: bold 36px Arial, Helvetica, sans-serif !important;
+	}
+
+	.tz-link span {
+		color: #da431c;
+	}
+  body {
+    margin: 0;
+    color: #872F67;
+    font-family: "Audiowide", cursive;
+    font-weight: 400;
+    font-size: 25px;
+  }
+
+  .content {
+    width: 795px;
+    margin: 0 auto;
+  }
+  .title:hover{
+   text-decoration-line: none;
+   
+ }
+ .title{
+   font-family:initial
+ }
+  section {
+    position: relative;
+    height: 280px;
+    width: 100%;
+    background-image: url('https://cdn1.imggmi.com/uploads/2019/2/28/4b62a898ce2a090806b631feb149c71a-full.jpg');
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+
+  section .left {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    width: 685px;
+    padding: 35px 0 0 110px;
+    text-align: center;
+  }
+
+  section .right {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    width: 110px;
+    padding: 30px 30px 0 0;
+  }
+
+  section .event {
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 1.6em;
+    line-height: 35px;
+    text-transform: uppercase;
+  }
+
+  section .title {
+    margin-bottom: 20px;
+    color: #4AB4C4;
+    font-size: 4em;
+    line-height: 72px;
+  }
+
+  section .info {
+    font-size: 0.8em;
+    text-transform: uppercase;
+  }
+
+  section .seats {
+    margin-bottom: 15px;
+    color: #4AB4C4;
+    font-family: "Kreon", serif;
+    font-size: 0.36em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  section .seats:last-child {
+    margin-bottom: 0;
+  }
+
+  section .seats span {
+    display: block;
+    margin-bottom: 5px;
+    padding: 10px 0;
+    color: #fff;
+    background: #4AB4C4;
+    font-size: 2.777em;
+  }
+</style>
+<script type="text/javascript">
+ 
+  function tick() {
+    window.print();
+  }
+
+</script>
+
+<body>
+  <header>
+
+  </header>
+  {% if user.is_authenticated %}
+  {% for tickets in tickets %}
+  {% csrf_token %}
+  <div class="content">
+    <section>
+      <div class="left">
+        <div class="event">Vishnu Miniplex</div>
+        <div class="title">E-Ticket</div>
+        <div class="info"><br>Bhimavaram</div>
+      </div>
+      <div class="right">
+        <div class="seats"><span>{{ tickets.seat_count }}</span>No.of Seats</div>
+        <div class="seats"><span>{{ tickets.seat_numbers }}</span>Seat.No</div>
+        <div class="seats"><span>Rs.{{ tickets.total_amount }}</span>Amont</div>
+      </div>
+      {% endfor %}
+      <div id="editor"></div>
+			<img src="{{ tickets.qrcode.url }}" alt="Event QR code" />
+    </section>
+    <button id="cmd" onclick="tick()">generate PDF</button>
+  </div>
+  {% else %}
+  <div class="content">
+    <section>
+      <div class="left">
+        <div class="event">Please Login and Book Your Ticket To Generate Your<br> E-ticket(s)</div>
+      </div>
+    </section>
+  </div>
+  {% endif %}
+
+
+</body>
+
+</html>
